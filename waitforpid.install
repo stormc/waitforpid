@@ -1,0 +1,12 @@
+post_install() {
+  _file=/usr/sbin/waitforpid
+  setcap cap_net_admin+p ${_file}
+  setcap -q -v cap_net_admin+p ${_file} \
+    || { echo "Cannot set POSIX capability cap_net_admin+p on ${_file}"; exit 1; }
+}
+
+post_upgrade() {
+  post_install
+}
+
+
