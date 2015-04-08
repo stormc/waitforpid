@@ -1,8 +1,12 @@
 SOURCE=waitforpid.c
 EXECUTABLE=$(SOURCE:.c=)
-DESTDIR=/usr/local
-PREFIX=
+
+DESTDIR =
+PREFIX  = /usr/local
+
 _CFLAGS = $(CFLAGS) -std=c99 -Wall -Wextra -Winline -Wpedantic -lcap
+
+.DEFAULT_GOAL := ${EXECUTABLE}
 
 all: $(EXECUTABLE)
 
@@ -14,5 +18,6 @@ install: $(EXECUTABLE)
 	install -D --group=root --owner=root --mode=0755 --strip $(EXECUTABLE) $(DESTDIR)/$(PREFIX)/sbin/$(EXECUTABLE)
 	setcap cap_net_admin+p $(DESTDIR)/$(PREFIX)/sbin/$(EXECUTABLE)
 
+.PHONY: clean
 clean:
 	@rm -f $(EXECUTABLE)
